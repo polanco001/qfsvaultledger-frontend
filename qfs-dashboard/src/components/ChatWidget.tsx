@@ -42,7 +42,12 @@ export function ChatWidget() {
       .then(data => setMessages(Array.isArray(data) ? data : []))
       .catch(() => setMessages([]));
 
-    const newSocket = io(API_URL, { auth: { token } });
+    const newSocket = io(API_URL, { 
+  auth: { token },
+  transports: ['websocket'],
+  upgrade: false
+});
+
     setSocket(newSocket);
 
     newSocket.on('newMessage', (msg: Message) => {
